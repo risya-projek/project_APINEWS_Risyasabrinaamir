@@ -1,10 +1,11 @@
+// API setup
 const apiKey = "b175b124b25d4743a72dc45ce02ba263";
 const url = `https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=12&apiKey=${apiKey}`;
 const newsContainer = document.getElementById("news-container");
 const searchInput = document.getElementById("searchInput");
 let allArticles = [];
 
-// Ambil data berita
+// Ambil data berita awal (kategori default)
 fetch(url)
   .then(response => {
     if (!response.ok) {
@@ -66,4 +67,21 @@ searchInput.addEventListener("input", e => {
     article.title && article.title.toLowerCase().includes(keyword)
   );
   displayNews(filtered);
+});
+
+// ===================== Tambahan jQuery kategori =====================
+$(".category-btn").click(function (e) {
+  e.preventDefault(); // biar gak reload halaman
+  const category = $(this).data("category");
+  const categoryUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&pageSize=12&apiKey=${apiKey}`;
+
+  fetch(categoryUrl)
+    .then(response => response.json())
+    .then(data => {
+      allArticles = data.articles || [];
+      displayNews(allArticles);
+    })
+    .catch(error => {
+      console.error("Gagal memuat berita kategori:", error);
+    });
 });
