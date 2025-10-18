@@ -1,6 +1,9 @@
 // API setup
 const apiKey = "b175b124b25d4743a72dc45ce02ba263";
-const url = `https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=12&apiKey=${apiKey}`;
+const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+  `https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=12&apiKey=${apiKey}`
+)}`;
+
 const newsContainer = document.getElementById("news-container");
 const searchInput = document.getElementById("searchInput");
 let allArticles = [];
